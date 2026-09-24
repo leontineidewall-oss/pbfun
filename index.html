@@ -7,9 +7,10 @@
 <meta name="description" content="Hold the record, hold the fees. A speedrun post becomes a pump.fun coin, and its fees go to whoever holds the world record.">
 <meta property="og:title" content="pb.fun">
 <meta property="og:description" content="Hold the record. Hold the fees.">
-<meta property="og:image" content="og.png">
+<meta property="og:image" content="https://pbfun.vercel.app/og.png">
+<meta property="og:url" content="https://pbfun.vercel.app/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="og.png">
+<meta name="twitter:image" content="https://pbfun.vercel.app/og.png">
 <meta name="theme-color" content="#f3f3f5">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230e0e0f'/%3E%3Cg fill='none' stroke-linecap='round' stroke-width='10' transform='translate(-4,-1)'%3E%3Ccircle cx='54' cy='48' r='20' stroke='%23fff'/%3E%3Cline x1='34' y1='31' x2='34' y2='86' stroke='%23fff'/%3E%3Cline x1='54' y1='28' x2='54' y2='21' stroke='%23fff'/%3E%3Cline x1='47' y1='16' x2='61' y2='16' stroke='%23fff'/%3E%3Cline x1='54' y1='48' x2='62' y2='40' stroke='%233ed17a'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,10 +71,33 @@ h1{font-weight:900;font-size:clamp(44px,5.2vw,68px);line-height:1;letter-spacing
 .pill .cap{font-size:13px;color:var(--mute)}
 .eg{position:absolute;left:4px;bottom:-4px;font-size:12px;color:var(--faint)}
 
-/* band */
-.band{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.band .col{display:flex;gap:14px;align-items:center;padding-top:18px;padding-bottom:18px;font-size:15px;color:var(--mute)}
-.band b{color:var(--ink)}
+/* live tape */
+.tape{background:var(--dark);color:#d9d9de;overflow:hidden;border-top:1px solid #000;border-bottom:1px solid #000}
+.tape .in{display:flex;gap:0;width:max-content;animation:tape 60s linear infinite}
+.tape:hover .in{animation-play-state:paused}
+.tape .it{display:flex;align-items:center;gap:10px;padding:15px 28px;font-size:14px;white-space:nowrap;border-right:1px solid #222226;font-variant-numeric:tabular-nums}
+.tape .it b{color:#fff;font-weight:600}
+.tape .it .t{color:var(--lime);font-weight:700}
+.tape .lab{display:flex;align-items:center;gap:8px;padding:15px 22px;font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--lime);white-space:nowrap}
+@keyframes tape{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 0 rgba(62,209,122,.6);animation:pulse 1.8s infinite;flex:none}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(62,209,122,0)}100%{box-shadow:0 0 0 0 rgba(62,209,122,0)}}
+
+/* record board */
+.board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}
+.rec{padding:20px;display:grid;grid-template-columns:56px minmax(0,1fr);gap:4px 16px;align-content:start}
+.rec .cv{width:56px;height:74px;border-radius:8px;object-fit:cover;background:linear-gradient(135deg,#ececf0,#dcdce2);grid-row:1/4}
+.rec .gm{font-size:13px;color:var(--mute);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rec .hd{font-size:22px;font-weight:800;letter-spacing:-.03em;line-height:1.15;overflow-wrap:anywhere}
+.rec .tm{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--green)}
+.rec .ft{grid-column:1/-1;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:14px;color:var(--mute);display:flex;justify-content:space-between;gap:12px}
+.rec .ft a{color:var(--ink);font-weight:600;white-space:nowrap}
+.rec.load .hd,.rec.load .tm,.rec.load .gm{color:transparent;background:#eeeef1;border-radius:6px}
+.boardnote{font-size:14px;color:var(--faint);margin-top:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{font:600 13px Inter,system-ui,sans-serif;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer}
+.chip:hover{border-color:var(--ink)}
+.chip:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 
 /* sections */
 .sec{padding-top:104px;padding-bottom:8px}
@@ -141,16 +165,19 @@ details[open] summary::after{content:"\2212"}
 details p{padding:0 22px 20px;color:var(--mute)}
 
 footer{margin-top:120px;border-top:1px solid var(--line);background:#fff}
-.foot{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:32px;padding-top:36px;padding-bottom:48px;font-size:14px;color:var(--mute)}
-.foot .fl{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
-.foot .fl a{color:var(--ink);font-weight:600}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-top:28px;padding-bottom:32px;font-size:14px;color:var(--mute)}
+.foot .fl{display:flex;gap:22px;flex-wrap:wrap}
+.foot .fl a{color:var(--ink);font-weight:600;text-decoration:none}
+.foot .fl a:hover{text-decoration:underline}
 .foot .fl span{color:var(--faint)}
+.foot .brand{color:var(--ink)}
 
 @media (max-width:980px){
   .links{display:none}
   .nav{grid-template-columns:minmax(0,1fr) auto}
   .hero{grid-template-columns:minmax(0,1fr);padding-top:44px;gap:48px}
   .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .board{grid-template-columns:repeat(2,minmax(0,1fr))}
   .tool{grid-template-columns:minmax(0,1fr)}
   .calc{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .calc .out{grid-column:1/-1}
@@ -163,14 +190,16 @@ footer{margin-top:120px;border-top:1px solid var(--line);background:#fff}
   .pill{justify-self:start;width:auto}
   .eg{position:static}
   .steps{grid-template-columns:minmax(0,1fr)}
+  .board{grid-template-columns:minmax(0,1fr)}
   .calc{grid-template-columns:minmax(0,1fr)}
   .sec{padding-top:80px}
-  .foot{grid-template-columns:minmax(0,1fr)}
-  .foot .fl{align-items:flex-start}
   .rules td:last-child{white-space:normal}
-  .band .col{align-items:flex-start}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .tape{overflow-x:auto}
+  .tape .in,.pulse{animation:none}
+}
 </style>
 </head>
 <body>
@@ -178,7 +207,7 @@ footer{margin-top:120px;border-top:1px solid var(--line);background:#fff}
   <div class="col nav">
     <a class="brand" href="#top" aria-label="pb.fun home"><span class="mark" data-mark="dark"></span>pb.fun</a>
     <nav class="links" aria-label="sections">
-      <a href="#how">How it works</a><a href="#lookup">Record lookup</a><a href="#fees">Fee math</a><a href="#rules">Rules</a><a href="#faq">FAQ</a>
+      <a href="#how">How it works</a><a href="#records">Live records</a><a href="#lookup">Lookup</a><a href="#fees">Fee math</a><a href="#faq">FAQ</a>
     </nav>
     <span class="status"><span class="dot"></span>Not live yet</span>
   </div>
@@ -214,7 +243,7 @@ footer{margin-top:120px;border-top:1px solid var(--line);background:#fff}
     </div>
   </section>
 
-  <div class="band"><div class="col"><span class="dot" aria-hidden="true"></span><span><b>Not live yet.</b> No coin has launched through pb.fun. Every number on this page is either live data from speedrun.com or a calculator you control.</span></div></div>
+  <div class="tape" aria-label="Live world records from speedrun.com"><div class="in" id="tape"><span class="lab"><span class="pulse" aria-hidden="true"></span>LIVE WORLD RECORDS</span><span class="it">reading speedrun.com&hellip;</span></div></div>
 
   <section class="col sec" id="how">
     <p class="kicker">How it works</p>
@@ -228,15 +257,24 @@ footer{margin-top:120px;border-top:1px solid var(--line);background:#fff}
     </div>
   </section>
 
+  <section class="col sec" id="records">
+    <p class="kicker">Live records</p>
+    <h2>Who would be paid right now.</h2>
+    <p class="intro">Six of the most-run games on speedrun.com, read live. If a pb.fun coin existed for each of these, its fees would be going to the name on the card.</p>
+    <div class="board" id="board"></div>
+    <p class="boardnote" id="boardNote">Default leaderboard for each category, straight from speedrun.com. Refreshes when you reload.</p>
+  </section>
+
   <section class="col sec" id="lookup">
     <p class="kicker">Record lookup</p>
-    <h2>Who would get paid right now?</h2>
+    <h2>Check any game.</h2>
     <p class="intro">Search any game on speedrun.com. This reads their public leaderboard live, the same source pb.fun would use.</p>
     <div class="card tool">
       <div>
         <div class="field">
           <label for="q">Game</label>
           <input id="q" type="search" placeholder="Celeste, Super Mario 64, Minecraft…" autocomplete="off" spellcheck="false">
+          <div class="chips" id="chips" aria-label="Popular games"></div>
           <ul class="games" id="games" aria-label="Matching games"></ul>
           <p class="note" id="qnote" aria-live="polite">Type at least two letters.</p>
         </div>
@@ -315,7 +353,7 @@ footer{margin-top:120px;border-top:1px solid var(--line);background:#fff}
 
 <footer>
   <div class="col foot">
-    <p>pb.fun is not affiliated with speedrun.com or pump.fun. Record data comes from speedrun.com's public API. A coin on pb.fun is not an endorsement by the runner whose record it pays. Memecoins are extremely volatile, most go to zero, and nothing here is financial advice.</p>
+    <a class="brand" href="#top"><span class="mark" data-mark="dark"></span>pb.fun</a>
     <div class="fl" id="links"></div>
   </div>
 </footer>
@@ -469,6 +507,65 @@ function loadBoard() {
     setRes("—", "—", "speedrun.com didn't answer.", "Not showing a holder we can't confirm.", true);
   });
 }
+
+/* ---------- live record board + tape ---------- */
+var BOARD = [["sm64", "120_Star"], ["celeste", "Any"], ["portal", "Inbounds"], ["hollowknight", "Any"], ["smo", "Any"], ["oot", "Any"]];
+function recCard() {
+  var el = document.createElement("div"); el.className = "card rec load";
+  el.innerHTML = '<img class="cv" alt=""><p class="gm">Loading game</p><p class="hd">Loading holder</p><p class="tm">0:00.00</p><p class="ft"><span>Reading speedrun.com&hellip;</span></p>';
+  return el;
+}
+function fillCard(el, d) {
+  el.classList.remove("load");
+  var game = d.game && d.game.data, cat = d.category && d.category.data, top = d.runs && d.runs[0];
+  var cover = game && game.assets && (game.assets["cover-medium"] || game.assets["cover-small"]);
+  var img = el.querySelector(".cv"); if (cover && cover.uri) img.src = cover.uri; img.alt = "";
+  el.querySelector(".gm").textContent = ((game && game.names && game.names.international) || "") + " \u00b7 " + ((cat && cat.name) || "");
+  var ft = el.querySelector(".ft"); ft.replaceChildren();
+  if (!top) { el.querySelector(".hd").textContent = "\u2014"; el.querySelector(".tm").textContent = "\u2014"; ft.append("No verified runs yet."); return null; }
+  var names = ((d.players && d.players.data) || []).map(function (p) { return (p.names && p.names.international) || p.name || "guest"; });
+  var holder = names.join(" & ") || "\u2014", time = fmtTime(top.run.times && top.run.times.primary_t);
+  el.querySelector(".hd").textContent = holder;
+  el.querySelector(".tm").textContent = time;
+  var s = document.createElement("span"); s.textContent = top.run.date ? "Set " + top.run.date : "Verified run"; ft.append(s);
+  if (top.run.weblink) { var a = document.createElement("a"); a.href = top.run.weblink; a.target = "_blank"; a.rel = "noopener"; a.textContent = "See the run \u2197"; ft.append(a); }
+  return { game: (game && game.names && game.names.international) || "", cat: (cat && cat.name) || "", holder: holder, time: time };
+}
+function failCard(el) {
+  el.classList.remove("load");
+  el.querySelector(".gm").textContent = "speedrun.com";
+  el.querySelector(".hd").textContent = "\u2014"; el.querySelector(".tm").textContent = "\u2014";
+  el.querySelector(".ft").textContent = "Didn't answer. Not guessing.";
+}
+(function () {
+  var board = $("#board"), cards = BOARD.map(function () { var c = recCard(); board.append(c); return c; });
+  Promise.all(BOARD.map(function (b, i) {
+    return getJSON(API + "/leaderboards/" + b[0] + "/category/" + b[1] + "?top=1&embed=players,game,category")
+      .then(function (j) { return fillCard(cards[i], j.data); })
+      .catch(function () { failCard(cards[i]); return null; });
+  })).then(function (rows) {
+    var ok = rows.filter(Boolean), tape = $("#tape");
+    var lab = tape.querySelector(".lab"); tape.replaceChildren(lab);
+    if (!ok.length) { var none = document.createElement("span"); none.className = "it"; none.textContent = "speedrun.com didn't answer. No records shown rather than old ones."; tape.append(none); $("#boardNote").textContent = "speedrun.com didn't answer. Reload to try again."; return; }
+    var add = function () {
+      ok.forEach(function (r) {
+        var it = document.createElement("span"); it.className = "it";
+        var g = document.createElement("span"); g.textContent = r.game + " \u00b7 " + r.cat;
+        var h = document.createElement("b"); h.textContent = r.holder;
+        var t = document.createElement("span"); t.className = "t"; t.textContent = r.time;
+        it.append(g, h, t); tape.append(it);
+      });
+    };
+    add(); if (!REDUCED) { tape.append(lab.cloneNode(true)); add(); }
+  });
+})();
+
+/* ---------- quick picks in the lookup ---------- */
+[["Celeste", "celeste"], ["Super Mario 64", "super mario 64"], ["Portal", "portal"], ["Hollow Knight", "hollow knight"], ["Ocarina of Time", "ocarina of time"]].forEach(function (p) {
+  var b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = p[0];
+  b.addEventListener("click", function () { $("#q").value = p[1]; clearTimeout(qTimer); search(p[1]); });
+  $("#chips").append(b);
+});
 
 /* ---------- footer links ---------- */
 (function () {
