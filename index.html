@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pb.fun</title>
+<meta name="description" content="Hold the record, hold the fees. A speedrun post becomes a pump.fun coin, and its fees go to whoever holds the world record.">
+<meta property="og:title" content="pb.fun">
+<meta property="og:description" content="Hold the record. Hold the fees.">
+<meta property="og:image" content="og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="og.png">
+<meta name="theme-color" content="#f3f3f5">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230e0e0f'/%3E%3Cg fill='none' stroke-linecap='round' stroke-width='10' transform='translate(-4,-1)'%3E%3Ccircle cx='54' cy='48' r='20' stroke='%23fff'/%3E%3Cline x1='34' y1='31' x2='34' y2='86' stroke='%23fff'/%3E%3Cline x1='54' y1='28' x2='54' y2='21' stroke='%23fff'/%3E%3Cline x1='47' y1='16' x2='61' y2='16' stroke='%23fff'/%3E%3Cline x1='54' y1='48' x2='62' y2='40' stroke='%233ed17a'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f3f5; --bg2:#e7e7ea; --card:#ffffff; --ink:#0b0b0c; --mute:#5b5b62; --faint:#8b8b93;
+  --line:#e2e2e6; --dark:#111113; --dline:#26262a; --green:#1f9d55; --lime:#3ed17a; --blue:#1d9bf0;
+  --pad:24px; --r:20px; --shadow:0 18px 40px rgba(20,20,30,.10),0 2px 6px rgba(20,20,30,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);overflow-x:hidden;scroll-behavior:smooth}
+body{font:400 16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif;color:var(--ink);background:linear-gradient(180deg,#f6f6f7 0,var(--bg) 560px);overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.col{max-width:1180px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+section{scroll-margin-top:84px}
+.mark{display:inline-block;width:28px;height:28px}
+.mark svg{width:100%;height:100%;display:block}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px/1 Inter,system-ui,sans-serif;text-decoration:none;border-radius:999px;padding:13px 20px;border:1px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer;white-space:nowrap}
+.btn:hover{background:#26262a}
+.btn.ghost{background:transparent;color:var(--ink);border-color:#cfcfd5}
+.btn.ghost:hover{background:#fff}
+.btn:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,.hit:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+
+/* nav */
+header{position:sticky;top:0;z-index:20;background:rgba(243,243,245,.82);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+header.scrolled{border-bottom-color:var(--line)}
+.nav{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;height:68px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.02em;text-decoration:none}
+.links{display:flex;gap:26px;font-size:14px;font-weight:500;color:var(--mute)}
+.links a{text-decoration:none}
+.links a:hover,.links a.on{color:var(--ink)}
+.status{justify-self:end;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--mute);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+.dot{width:8px;height:8px;border-radius:50%;background:#c9c9cf;flex:none}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.95fr);gap:40px;align-items:center;padding-top:72px;padding-bottom:88px}
+h1{font-weight:900;font-size:clamp(44px,5.2vw,68px);line-height:1;letter-spacing:-.05em;text-wrap:balance}
+.lead{font-size:clamp(18px,1.6vw,21px);color:var(--mute);margin-top:24px;max-width:34ch;letter-spacing:-.01em}
+.lead b{color:var(--ink);font-weight:600}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.stage{position:relative;min-height:430px}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow)}
+.post{position:absolute;right:0;top:0;width:min(440px,100%);padding:20px 22px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:4px 14px}
+.av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#dcdce1,#c4c4cb);grid-row:1/3}
+.who{font-size:15px;color:#6a6a72}.who b{color:var(--ink);font-weight:700;margin-right:4px}
+.ptext{font-size:18px;line-height:1.35;font-weight:500;letter-spacing:-.01em}
+.tick{color:var(--blue)}
+.xg{position:absolute;right:20px;top:16px;font-weight:900;font-size:16px}
+.timer{position:absolute;left:0;top:156px;width:290px;background:var(--dark);color:#eaeaea;border-radius:18px;padding:14px 20px;box-shadow:0 18px 40px rgba(10,10,20,.22);font-size:16px}
+.row{display:flex;justify-content:space-between;padding:7px 0;font-variant-numeric:tabular-nums}
+.row+.row{border-top:1px solid var(--dline)}
+.lbl{color:#8b8b93}.old{color:#8b8b93;text-decoration:line-through}.g{color:var(--lime);font-weight:700}
+.pill{position:absolute;right:0;top:326px;display:flex;align-items:center;gap:14px;border-radius:999px;padding:12px 22px 12px 14px}
+.chk{width:38px;height:38px;border-radius:50%;background:var(--green);display:grid;place-items:center;flex:none}
+.pill .big{font-size:22px;font-weight:800;color:var(--green);letter-spacing:-.02em;line-height:1.1}
+.pill .cap{font-size:13px;color:var(--mute)}
+.eg{position:absolute;left:4px;bottom:-4px;font-size:12px;color:var(--faint)}
+
+/* band */
+.band{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.band .col{display:flex;gap:14px;align-items:center;padding-top:18px;padding-bottom:18px;font-size:15px;color:var(--mute)}
+.band b{color:var(--ink)}
+
+/* sections */
+.sec{padding-top:104px;padding-bottom:8px}
+.kicker{font-size:13px;font-weight:700;color:var(--green);letter-spacing:.02em}
+h2{font-weight:900;font-size:clamp(34px,4.4vw,56px);line-height:1.02;letter-spacing:-.045em;margin-top:10px;max-width:18ch}
+.intro{color:var(--mute);font-size:18px;max-width:58ch;margin-top:16px}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:40px}
+.step{padding:24px}
+.step .n{width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.step h3{font-size:19px;letter-spacing:-.02em;margin-top:18px;line-height:1.2}
+.step p{color:var(--mute);font-size:15px;margin-top:8px}
+code{font:600 .92em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#f0f0f3;border-radius:6px;padding:1px 6px}
+
+/* lookup */
+.tool{margin-top:40px;padding:28px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+label{display:block;font-size:13px;font-weight:600;color:var(--mute);margin-bottom:8px}
+input,select{width:100%;font:500 16px Inter,system-ui,sans-serif;color:var(--ink);background:#f6f6f8;border:1px solid var(--line);border-radius:12px;padding:13px 14px;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,#8b8b93 50%),linear-gradient(135deg,#8b8b93 50%,transparent 50%);background-position:calc(100% - 20px) 55%,calc(100% - 15px) 55%;background-size:5px 5px;background-repeat:no-repeat;padding-right:36px}
+.field+.field{margin-top:18px}
+.games{list-style:none;margin-top:10px;display:grid;gap:6px;max-height:252px;overflow:auto}
+.hit{width:100%;display:flex;align-items:center;gap:12px;text-align:left;font:500 15px Inter,system-ui,sans-serif;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px;cursor:pointer;color:var(--ink)}
+.hit:hover,.hit.sel{border-color:var(--ink)}
+.hit img{width:28px;height:36px;object-fit:cover;border-radius:4px;background:#eee;flex:none}
+.hit span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.note{font-size:14px;color:var(--mute);margin-top:10px;min-height:1.4em}
+.res{background:#f6f6f8;border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px;min-height:260px}
+.res .k{font-size:13px;color:var(--mute);font-weight:600}
+.res .holder{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.1;overflow-wrap:anywhere}
+.res .time{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.res .meta{font-size:14px;color:var(--mute)}
+.res .say{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:15px}
+.res .say b{color:var(--green)}
+.res a{color:var(--ink);font-weight:600}
+.empty{color:var(--faint)}
+
+/* fee math */
+.calc{margin-top:40px;padding:28px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.3fr);gap:20px;align-items:end}
+.out{background:var(--dark);color:#fff;border-radius:16px;padding:18px 20px}
+.out .k{font-size:13px;color:#9a9aa2}
+.out .v{font-size:30px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--lime);margin-top:2px}
+.out .s{font-size:13px;color:#9a9aa2;margin-top:6px;font-variant-numeric:tabular-nums}
+.calcnote{grid-column:1/-1;font-size:14px;color:var(--mute)}
+.err{color:#b4232c}
+
+/* rules + cannot */
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:40px}
+table{width:100%;border-collapse:collapse}
+.rules{padding:8px 24px}
+.rules td{padding:14px 0;border-top:1px solid var(--line);vertical-align:top;font-size:15px}
+.rules tr:first-child td{border-top:0}
+.rules td:last-child{text-align:right;font-weight:700;padding-left:16px;white-space:nowrap}
+.cannot{padding:8px 24px}
+.cannot th{text-align:left;font-size:12px;font-weight:700;color:var(--faint);padding:14px 0 6px}
+.cannot td{padding:12px 0;border-top:1px solid var(--line);vertical-align:top;font-size:15px;width:50%}
+.cannot td:first-child{padding-right:16px}
+.cannot td:last-child{color:var(--mute)}
+
+/* faq */
+.faq{margin-top:40px;display:grid;gap:10px;max-width:820px}
+details{background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(20,20,30,.05);border:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:18px 22px;font-weight:600;font-size:17px;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:500;color:var(--faint)}
+details[open] summary::after{content:"\2212"}
+details p{padding:0 22px 20px;color:var(--mute)}
+
+footer{margin-top:120px;border-top:1px solid var(--line);background:#fff}
+.foot{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:32px;padding-top:36px;padding-bottom:48px;font-size:14px;color:var(--mute)}
+.foot .fl{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.foot .fl a{color:var(--ink);font-weight:600}
+.foot .fl span{color:var(--faint)}
+
+@media (max-width:980px){
+  .links{display:none}
+  .nav{grid-template-columns:minmax(0,1fr) auto}
+  .hero{grid-template-columns:minmax(0,1fr);padding-top:44px;gap:48px}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tool{grid-template-columns:minmax(0,1fr)}
+  .calc{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .calc .out{grid-column:1/-1}
+  .grid2{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  :root{--pad:16px}
+  .stage{min-height:0;display:grid;gap:14px}
+  .post,.timer,.pill{position:static;width:100%}
+  .pill{justify-self:start;width:auto}
+  .eg{position:static}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .calc{grid-template-columns:minmax(0,1fr)}
+  .sec{padding-top:80px}
+  .foot{grid-template-columns:minmax(0,1fr)}
+  .foot .fl{align-items:flex-start}
+  .rules td:last-child{white-space:normal}
+  .band .col{align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header id="top">
+  <div class="col nav">
+    <a class="brand" href="#top" aria-label="pb.fun home"><span class="mark" data-mark="dark"></span>pb.fun</a>
+    <nav class="links" aria-label="sections">
+      <a href="#how">How it works</a><a href="#lookup">Record lookup</a><a href="#fees">Fee math</a><a href="#rules">Rules</a><a href="#faq">FAQ</a>
+    </nav>
+    <span class="status"><span class="dot"></span>Not live yet</span>
+  </div>
+</header>
+
+<main>
+  <section class="col hero" aria-label="pb.fun">
+    <div>
+      <h1>Hold the record.<br>Hold the fees.</h1>
+      <p class="lead">Post a speedrun and a coin launches on pump.fun. <b>Its fees go to whoever holds the world record</b> &mdash; and move the moment someone beats it.</p>
+      <div class="ctas">
+        <a class="btn" href="#lookup">Who holds a record right now?</a>
+        <a class="btn ghost" href="#how">How it works</a>
+      </div>
+    </div>
+    <div class="stage" aria-label="Example of a record changing hands">
+      <div class="card post">
+        <div class="av"></div>
+        <div class="who"><b>You</b>@you &middot; now</div>
+        <div class="ptext">new pb on <span class="tick" id="egTicker">$RUN</span>. <span id="egTime">14:32.08</span><br>the fees are mine now.</div>
+        <div class="xg" aria-hidden="true">X</div>
+      </div>
+      <div class="timer" role="img" aria-label="Old record 14:33.55, your time 14:32.08, delta minus 1.47 seconds">
+        <div class="row"><span class="lbl">Record</span><span class="old">14:33.55</span></div>
+        <div class="row"><span>You</span><span class="g" id="runClock">14:32.08</span></div>
+        <div class="row"><span class="lbl">Delta</span><span class="g">&minus;1.47</span></div>
+      </div>
+      <div class="card pill">
+        <span class="chk"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span><span class="big" style="display:block">Record taken</span><span class="cap">its fees now route to you</span></span>
+      </div>
+      <p class="eg">Example only. Not a real coin or run.</p>
+    </div>
+  </section>
+
+  <div class="band"><div class="col"><span class="dot" aria-hidden="true"></span><span><b>Not live yet.</b> No coin has launched through pb.fun. Every number on this page is either live data from speedrun.com or a calculator you control.</span></div></div>
+
+  <section class="col sec" id="how">
+    <p class="kicker">How it works</p>
+    <h2>The record is the wallet.</h2>
+    <p class="intro">pump.fun already pays a creator fee on every trade. pb.fun points that fee at the one person every speedrun community already agrees on: the world record holder.</p>
+    <div class="steps">
+      <div class="card step"><span class="n">1</span><h3>Post your run</h3><p>Reply to a run on X, tag <code>@usepb</code>, add the game, category and a <code>$TICKER</code>.</p></div>
+      <div class="card step"><span class="n">2</span><h3>A coin launches</h3><p>It goes live on pump.fun with its own pool wallet as the creator, so the creator fee fills the pool.</p></div>
+      <div class="card step"><span class="n">3</span><h3>The record holder earns</h3><p>The pool pays whoever holds the verified world record on speedrun.com, in SOL.</p></div>
+      <div class="card step"><span class="n">4</span><h3>Beat it, take it</h3><p>When a faster run is verified, fees from then on go to the new holder. What was paid stays paid.</p></div>
+    </div>
+  </section>
+
+  <section class="col sec" id="lookup">
+    <p class="kicker">Record lookup</p>
+    <h2>Who would get paid right now?</h2>
+    <p class="intro">Search any game on speedrun.com. This reads their public leaderboard live, the same source pb.fun would use.</p>
+    <div class="card tool">
+      <div>
+        <div class="field">
+          <label for="q">Game</label>
+          <input id="q" type="search" placeholder="Celeste, Super Mario 64, Minecraft…" autocomplete="off" spellcheck="false">
+          <ul class="games" id="games" aria-label="Matching games"></ul>
+          <p class="note" id="qnote" aria-live="polite">Type at least two letters.</p>
+        </div>
+        <div class="field">
+          <label for="cat">Category</label>
+          <select id="cat" disabled><option>Pick a game first</option></select>
+        </div>
+      </div>
+      <div class="res" id="res" aria-live="polite">
+        <p class="k">Current world record holder</p>
+        <p class="holder empty" id="rHolder">&mdash;</p>
+        <p class="time" id="rTime">&mdash;</p>
+        <p class="meta" id="rMeta">No game picked yet.</p>
+        <p class="say" id="rSay">A dash means there's nothing to show yet, not a zero.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="col sec" id="fees">
+    <p class="kicker">Fee math</p>
+    <h2>What the record is worth.</h2>
+    <p class="intro">Plug in a trading volume and see how the creator fee splits. These are example inputs, not live numbers. Change them.</p>
+    <div class="card calc">
+      <div><label for="vol">Trading volume (SOL)</label><input id="vol" type="number" inputmode="decimal" min="0" step="any" value="100"></div>
+      <div><label for="fee">Creator fee (%)</label><input id="fee" type="number" inputmode="decimal" min="0" max="100" step="any" value="0.3"></div>
+      <div><label for="share">Record holder share (%)</label><input id="share" type="number" inputmode="decimal" min="0" max="100" step="any" value="90"></div>
+      <div class="out" aria-live="polite">
+        <p class="k">To the record holder</p>
+        <p class="v" id="toHolder">0.2700 SOL</p>
+        <p class="s" id="calcSplit">Pool 0.3000 SOL &middot; pad 0.0300 SOL</p>
+      </div>
+      <p class="calcnote" id="calcNote">0.3% is pump.fun's creator fee on the bonding curve at the time of writing; check the current rate. 90% is pb.fun's planned share.</p>
+    </div>
+  </section>
+
+  <section class="col sec" id="rules">
+    <p class="kicker">Rules</p>
+    <h2>Planned rules, in numbers.</h2>
+    <p class="intro">Nothing is live, so these are the rules pb.fun is being built to. They will be fixed on-chain where they can be.</p>
+    <div class="grid2">
+      <div class="card rules"><table>
+        <tr><td>Source of truth</td><td>speedrun.com, verified runs</td></tr>
+        <tr><td>Coins per game and category</td><td>1</td></tr>
+        <tr><td>Record holder share of the pool</td><td>90%</td></tr>
+        <tr><td>Pad share</td><td>10%</td></tr>
+        <tr><td>Paid in</td><td>SOL</td></tr>
+        <tr><td>Record changes hands</td><td>fees move on verification</td></tr>
+        <tr><td>Tied times</td><td>earlier run keeps it</td></tr>
+        <tr><td>Unclaimed fees</td><td>wait, never expire</td></tr>
+        <tr><td>Claiming</td><td>sign in with speedrun.com + wallet</td></tr>
+      </table></div>
+      <div class="card cannot"><table>
+        <thead><tr><th>pb.fun cannot</th><th>so it</th></tr></thead>
+        <tbody>
+          <tr><td>judge runs itself.</td><td>takes speedrun.com's verified leaderboard as final.</td></tr>
+          <tr><td>ask a runner before a coin exists.</td><td>says clearly that holding a record is not an endorsement.</td></tr>
+          <tr><td>promise the pool has anything in it.</td><td>shows a dash until there is volume. Fees can be zero.</td></tr>
+          <tr><td>undo a payout.</td><td>only moves fees from the moment a new record is verified.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section class="col sec" id="faq">
+    <p class="kicker">FAQ</p>
+    <h2>Questions.</h2>
+    <div class="faq">
+      <details><summary>Do record holders have to do anything?</summary><p>No. Fees wait for them. To claim, they sign in with the speedrun.com account that holds the record and connect a wallet. Unclaimed fees never expire and nobody else can claim them.</p></details>
+      <details><summary>What if a run gets rejected or removed?</summary><p>pb.fun follows the verified leaderboard. If the top run changes for any reason, fees from that moment on go to whoever is now on top. Nothing already paid is taken back.</p></details>
+      <details><summary>Which categories count?</summary><p>Whatever speedrun.com lists as a full-game category. Levels and subcategories are planned later. The lookup above shows the category's default leaderboard.</p></details>
+      <details><summary>Is this live?</summary><p>No. No coins have launched through pb.fun, and there is no contract address. Anything claiming otherwise is not us.</p></details>
+      <details><summary>What can go wrong?</summary><p>Memecoins are extremely volatile and most go to zero, so fees can be zero. speedrun.com could change or limit its API. pump.fun could change its fees or program. None of this is financial advice.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="col foot">
+    <p>pb.fun is not affiliated with speedrun.com or pump.fun. Record data comes from speedrun.com's public API. A coin on pb.fun is not an endorsement by the runner whose record it pays. Memecoins are extremely volatile, most go to zero, and nothing here is financial advice.</p>
+    <div class="fl" id="links"></div>
+  </div>
+</footer>
+
+<script>
+/* ============ CONFIG ============ */
+var CONFIG = {
+  x: "",        /* https://x.com/usepb once the account is yours */
+  github: "https://github.com/leontineidewall-oss/pbfun"
+};
+/* ================================ */
+
+var API = "https://www.speedrun.com/api/v1";
+var MARK = function (stroke, hand) {
+  return '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="10" transform="translate(-4,-1)">' +
+    '<circle cx="54" cy="48" r="20" stroke="' + stroke + '"/>' +
+    '<line x1="34" y1="31" x2="34" y2="86" stroke="' + stroke + '"/>' +
+    '<line x1="54" y1="28" x2="54" y2="21" stroke="' + stroke + '"/>' +
+    '<line x1="47" y1="16" x2="61" y2="16" stroke="' + stroke + '"/>' +
+    '<line x1="54" y1="48" x2="62" y2="40" stroke="' + hand + '"/></g></svg>';
+};
+var $ = function (s) { return document.querySelector(s); };
+var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+document.querySelectorAll("[data-mark]").forEach(function (el) { el.innerHTML = MARK("#0b0b0c", "#1f9d55"); });
+
+/* ---------- time + number formatting ---------- */
+function fmtTime(sec) {
+  if (sec === null || sec === undefined || !isFinite(sec) || sec < 0) return "—";
+  var cs = Math.round(sec * 100), h = Math.floor(cs / 360000), m = Math.floor(cs % 360000 / 6000), s = Math.floor(cs % 6000 / 100), c = cs % 100;
+  var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+  return (h ? h + ":" + pad(m) : String(m)) + ":" + pad(s) + "." + pad(c);
+}
+function fmtSol(v) { return isFinite(v) ? v.toFixed(4) + " SOL" : "—"; }
+
+/* ---------- fee math ---------- */
+function calc() {
+  var vol = parseFloat($("#vol").value), fee = parseFloat($("#fee").value), share = parseFloat($("#share").value);
+  var bad = [isNaN(vol) || vol < 0, isNaN(fee) || fee < 0 || fee > 100, isNaN(share) || share < 0 || share > 100];
+  var note = $("#calcNote");
+  if (bad[0] || bad[1] || bad[2]) {
+    $("#toHolder").textContent = "—";
+    $("#calcSplit").textContent = "Pool — · pad —";
+    note.textContent = bad[0] ? "Volume has to be zero or more." : "Percentages have to be between 0 and 100.";
+    note.className = "calcnote err";
+    return;
+  }
+  var pool = vol * fee / 100, holder = pool * share / 100;
+  $("#toHolder").textContent = fmtSol(holder);
+  $("#calcSplit").textContent = "Pool " + fmtSol(pool) + " · pad " + fmtSol(pool - holder);
+  note.textContent = "0.3% is pump.fun's creator fee on the bonding curve at the time of writing; check the current rate. 90% is pb.fun's planned share.";
+  note.className = "calcnote";
+}
+["#vol", "#fee", "#share"].forEach(function (s) { $(s).addEventListener("input", calc); });
+calc();
+
+/* ---------- record lookup ---------- */
+var state = { game: null, seq: 0 };
+function getJSON(url) {
+  var ctl = new AbortController(), t = setTimeout(function () { ctl.abort(); }, 9000);
+  return fetch(url, { signal: ctl.signal }).then(function (r) {
+    clearTimeout(t);
+    if (!r.ok) throw new Error("http " + r.status);
+    return r.json();
+  });
+}
+function setRes(holder, time, meta, say, empty) {
+  var h = $("#rHolder");
+  h.textContent = holder; h.className = "holder" + (empty ? " empty" : "");
+  $("#rTime").textContent = time;
+  $("#rMeta").textContent = meta;
+  if (say instanceof Node) { $("#rSay").replaceChildren(say); } else { $("#rSay").textContent = say; }
+}
+var qTimer;
+$("#q").addEventListener("input", function () {
+  clearTimeout(qTimer);
+  var q = this.value.trim();
+  if (q.length < 2) { $("#games").replaceChildren(); $("#qnote").textContent = "Type at least two letters."; return; }
+  qTimer = setTimeout(function () { search(q); }, 300);
+});
+$("#q").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") { e.preventDefault(); clearTimeout(qTimer); var q = this.value.trim(); if (q.length >= 2) search(q); }
+});
+function search(q) {
+  var seq = ++state.seq;
+  $("#qnote").textContent = "Searching speedrun.com…";
+  getJSON(API + "/games?name=" + encodeURIComponent(q) + "&max=8").then(function (j) {
+    if (seq !== state.seq) return;
+    var list = $("#games"); list.replaceChildren();
+    var data = (j && j.data) || [];
+    if (!data.length) { $("#qnote").textContent = "No games match “" + q + "” on speedrun.com."; return; }
+    $("#qnote").textContent = data.length + (data.length === 1 ? " game" : " games") + " found. Pick one.";
+    data.forEach(function (g) {
+      var li = document.createElement("li"), b = document.createElement("button");
+      b.type = "button"; b.className = "hit";
+      var cover = g.assets && g.assets["cover-tiny"] && g.assets["cover-tiny"].uri;
+      var img = document.createElement("img"); img.alt = ""; if (cover) img.src = cover; img.loading = "lazy";
+      var sp = document.createElement("span"); sp.textContent = (g.names && g.names.international) || g.abbreviation || g.id;
+      b.append(img, sp);
+      b.addEventListener("click", function () {
+        document.querySelectorAll(".hit").forEach(function (x) { x.classList.remove("sel"); });
+        b.classList.add("sel"); pickGame(g);
+      });
+      li.append(b); list.append(li);
+    });
+  }).catch(function () {
+    if (seq !== state.seq) return;
+    $("#qnote").textContent = "speedrun.com didn't answer. Not guessing — try again in a moment.";
+  });
+}
+function pickGame(g) {
+  state.game = g;
+  var sel = $("#cat"); sel.disabled = true; sel.replaceChildren(new Option("Loading categories…", ""));
+  setRes("—", "—", ((g.names && g.names.international) || g.id) + " · pick a category.", "A dash means there's nothing to show yet, not a zero.", true);
+  getJSON(API + "/games/" + g.id + "/categories").then(function (j) {
+    if (state.game !== g) return;
+    var cats = ((j && j.data) || []).filter(function (c) { return c.type === "per-game"; });
+    sel.replaceChildren();
+    if (!cats.length) { sel.append(new Option("No full-game categories", "")); setRes("—", "—", "This game has no full-game categories.", "Nothing to pay, so nothing is shown.", true); return; }
+    cats.forEach(function (c) { sel.append(new Option(c.name + (c.miscellaneous ? " (misc)" : ""), c.id)); });
+    sel.disabled = false;
+    loadBoard();
+  }).catch(function () {
+    if (state.game !== g) return;
+    sel.replaceChildren(new Option("Couldn't load categories", ""));
+    setRes("—", "—", "speedrun.com didn't answer.", "Not showing a holder we can't confirm.", true);
+  });
+}
+$("#cat").addEventListener("change", loadBoard);
+function loadBoard() {
+  var g = state.game, cid = $("#cat").value, cname = $("#cat").selectedOptions[0] ? $("#cat").selectedOptions[0].text : "";
+  if (!g || !cid) return;
+  var seq = ++state.seq;
+  setRes("…", "—", "Reading the leaderboard…", "", true);
+  getJSON(API + "/leaderboards/" + g.id + "/category/" + cid + "?top=1&embed=players").then(function (j) {
+    if (seq !== state.seq) return;
+    var d = j && j.data, top = d && d.runs && d.runs[0];
+    var gname = (g.names && g.names.international) || g.id;
+    if (!top) { setRes("—", "—", gname + " · " + cname + " has no verified runs.", "No record, so a coin here would have nobody to pay yet.", true); return; }
+    var run = top.run, players = (d.players && d.players.data) || [];
+    var names = players.map(function (p) { return (p.names && p.names.international) || p.name || "guest"; });
+    var holder = names.length ? names.join(" & ") : "—";
+    var meta = gname + " · " + cname + (run.date ? " · set " + run.date : "");
+    var say = document.createElement("span");
+    say.append("If this coin existed, its fees would go to ");
+    var b = document.createElement("b"); b.textContent = holder; say.append(b, ". ");
+    if (run.weblink) { var a = document.createElement("a"); a.href = run.weblink; a.target = "_blank"; a.rel = "noopener"; a.textContent = "See the run ↗"; say.append(a); }
+    setRes(holder, fmtTime(run.times && run.times.primary_t), meta, say, false);
+  }).catch(function () {
+    if (seq !== state.seq) return;
+    setRes("—", "—", "speedrun.com didn't answer.", "Not showing a holder we can't confirm.", true);
+  });
+}
+
+/* ---------- footer links ---------- */
+(function () {
+  var L = $("#links");
+  function add(label, url) {
+    if (/^https:\/\//.test(url || "")) { var a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = label + " ↗"; L.append(a); }
+    else { var s = document.createElement("span"); s.textContent = label + " —"; L.append(s); }
+  }
+  add("X", CONFIG.x); add("GitHub", CONFIG.github); add("speedrun.com API", "https://github.com/speedruncomorg/api");
+})();
+
+/* ---------- nav state ---------- */
+(function () {
+  var hdr = $("header");
+  var onScroll = function () { hdr.classList.toggle("scrolled", window.scrollY > 8); };
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  var links = Array.prototype.slice.call(document.querySelectorAll(".links a")).filter(function (a) { return a.getAttribute("href").charAt(0) === "#"; });
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id); }); });
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  links.forEach(function (a) { var s = document.getElementById(a.getAttribute("href").slice(1)); if (s) io.observe(s); });
+})();
+
+/* ---------- hero timer: counts up once, ends on the resting value ---------- */
+(function () {
+  var el = $("#runClock"), end = 872.08, start = 860;
+  if (REDUCED) return;
+  var t0 = null;
+  function step(ts) {
+    if (t0 === null) t0 = ts;
+    var k = Math.min(1, (ts - t0) / 1400), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = fmtTime(start + (end - start) * e);
+    if (k < 1) requestAnimationFrame(step); else el.textContent = fmtTime(end);
+  }
+  requestAnimationFrame(step);
+})();
+
+window.PB_READY = true;
+</script>
+</body>
+</html>
